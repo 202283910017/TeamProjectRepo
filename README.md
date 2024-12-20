@@ -6,6 +6,9 @@ It reads book information from a file and supports operations such as adding, vi
 The modified information is saved back to a specified file. Book information includes ISBN, book title, author, and price.When performing any of these functions, the system can verify whether the user’s input is valid and prompt the user to re-enter if the input is invalid. 
 Additionally, users can select the menu color and test some system functionalities using JUnit.
 
+          Final Version
+Version4
+
           Branch Model
           
 Main: A stable version that can run properly.
