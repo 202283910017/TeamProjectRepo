@@ -15,7 +15,7 @@ Main: A stable version that can run properly.
 
 Version4-develop:develop process of Version4
 
-Debug: A version where the functionality cannot be properly implemented.
+Version4 - Debug: A version where the functionality cannot be properly implemented.
 
          Team Project Code
 Version 1: A simple book management system with only viewing and searching functions.
