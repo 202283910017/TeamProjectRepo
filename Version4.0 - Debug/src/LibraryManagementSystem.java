@@ -7,8 +7,7 @@ public class LibraryManagementSystem
     public Book[] books =
             {
                     new Book(1111111, "T1", "A1",12),
-                    new Book(2222222, "T2", "A2",10),
-                    new Book(3333333, "T3", "A3",8)
+                    new Book(2222222, "T2", "A2",12)
             };
 
     // Initialize scanner for user input
@@ -34,13 +33,9 @@ public class LibraryManagementSystem
             System.out.println("4. Add Book");
             System.out.println("5. Edit Book");
             System.out.println("6. Delete Book");
-            System.out.println("7. Find Highest Price Book");
-            System.out.println("8. Find Lowest Price Book");
-            System.out.println("9. Total Price of All Books");
-            System.out.println("10. Exit System");
+            System.out.println("7. Exit system");
 
-
-            int choice = getValidIntInput("Choose an option between 1-10: ", 1, 10);
+            int choice = getValidIntInput("Choose an option between 1-7: ", 1, 7);
 
             // Switch statement to handle the user's menu choice
             switch (choice)
@@ -64,15 +59,6 @@ public class LibraryManagementSystem
                     deleteBook();
                     break;
                 case 7:
-                    findHighestPriceBook();
-                    break;
-                case 8:
-                    findLowestPriceBook();
-                    break;
-                case 9:
-                    totalPriceOfBooks();
-                    break;
-                case 10:
                     System.out.println("Exiting system. Goodbye!");
                     return;
                 default:
@@ -82,67 +68,6 @@ public class LibraryManagementSystem
         }
     }
 
-
-    // Find the book with the highest price
-    public void findHighestPriceBook()
-    {
-        if (books.length == 0)
-        {
-            System.out.println("No books available.");
-            return;
-        }
-
-        Book highestPriceBook = books[0];
-
-        // Loop through all books to find the one with the highest price
-        for (int i = 1; i < books.length; i++)
-        {
-            if (books[i].getPrice() > highestPriceBook.getPrice())
-            {
-                highestPriceBook = books[i];
-            }
-        }
-
-        System.out.println("The book with the highest price is: " + highestPriceBook);
-    }
-
-
-    // Find the book with the lowest price
-    public void findLowestPriceBook()
-    {
-        if (books.length == 0)
-        {
-            System.out.println("No books available.");
-            return;
-        }
-
-        Book lowestPriceBook = books[0];
-
-        // Loop through all books to find the one with the lowest price
-        for (int i = 1; i < books.length; i++)
-        {
-            if (books[i].getPrice() < lowestPriceBook.getPrice())
-            {
-                lowestPriceBook = books[i];
-            }
-        }
-
-        System.out.println("The book with the lowest price is: " + lowestPriceBook);
-    }
-
-    // Calculate the total price of all books
-    public void totalPriceOfBooks()
-    {
-        int totalPrice = 0;
-
-        // Loop through all books and accumulate their prices
-        for (int i = 0; i < books.length; i++)
-        {
-            totalPrice += books[i].getPrice();
-        }
-
-        System.out.println("The total price of all books is: " + totalPrice);
-    }
 
     // Search books
     public void searchBook()
@@ -175,7 +100,7 @@ public class LibraryManagementSystem
     {
         // Prompt the user to enter a partial ISBN for the search
         System.out.print("Enter part of ISBN to search: ");
-        String query = scanner.nextLine().toLowerCase();  // Convert the input to lowercase
+        String query = scanner.nextLine().toLowerCase();   // Convert the input to lowercase
 
         boolean found = false; // Flag to check if any book is found
 
@@ -187,6 +112,7 @@ public class LibraryManagementSystem
             {
                 System.out.println("Book found: " + books[i]);
                 found = true;
+                break;
             }
         }
 

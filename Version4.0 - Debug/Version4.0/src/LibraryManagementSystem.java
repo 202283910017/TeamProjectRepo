@@ -1,23 +1,21 @@
 // LibraryManagementSystem
 import java.util.Scanner;
-import java.io.*;
 
 public class LibraryManagementSystem
 {
-
-    // Declare book array
-    public Book[] books;
+    // Initialize books with sample data
+    public Book[] books =
+            {
+                    new Book(1111111, "T1", "A1",12),
+                    new Book(2222222, "T2", "A2",12)
+            };
 
     // Initialize scanner for user input
     public Scanner scanner = new Scanner(System.in);
 
-    // Txt file path
-    private String FILE_PATH = "F:\\Java\\books.txt";
-
     public static void main(String[] args)
     {
         LibraryManagementSystem system = new LibraryManagementSystem(); // Create system object
-        system.loadBooksFromTxt(); // Load books from txt
         system.run(); // Start the system
     }
 
@@ -25,37 +23,19 @@ public class LibraryManagementSystem
     // Main loop of the system, displays menu and handles user input
     public void run()
     {
-        System.out.println("Library Management System");
-        System.out.println("Choose the color of the menu (1-7):");
-        System.out.println("1. Red");
-        System.out.println("2. Green");
-        System.out.println("3. Yellow");
-        System.out.println("4. Blue");
-        System.out.println("5. Magenta");
-        System.out.println("6. Cyan");
-        System.out.println("7. White");
-
-        int colorChoice = getValidIntInput("Choose a color between 1-7: ", 1, 7);
-        String chosenColor = MenuColor.getColorByChoice(colorChoice);
-
-
         while (true)
         {
             // Show main menu
-            System.out.println(chosenColor + "1. Search Book");
+            System.out.println("Library Management System");
+            System.out.println("1. Search Book");
             System.out.println("2. Search Book (Vaguely match author or title)");
             System.out.println("3. Book List");
             System.out.println("4. Add Book");
             System.out.println("5. Edit Book");
             System.out.println("6. Delete Book");
-            System.out.println("7. Find Highest Price Book");
-            System.out.println("8. Find Lowest Price Book");
-            System.out.println("9. Total Price of All Books");
-            System.out.println("10. Exit System");
-            System.out.println(MenuColor.RESET);
+            System.out.println("7. Exit system");
 
-
-            int choice = getValidIntInput("Choose an option between 1-10: ", 1, 10);
+            int choice = getValidIntInput("Choose an option between 1-7: ", 1, 7);
 
             // Switch statement to handle the user's menu choice
             switch (choice)
@@ -79,17 +59,7 @@ public class LibraryManagementSystem
                     deleteBook();
                     break;
                 case 7:
-                    findHighestPriceBook();
-                    break;
-                case 8:
-                    findLowestPriceBook();
-                    break;
-                case 9:
-                    totalPriceOfBooks();
-                    break;
-                case 10:
                     System.out.println("Exiting system. Goodbye!");
-                    saveBooksToTxt();
                     return;
                 default:
                     System.out.println("Invalid option. Please try again."); // Process invalid input
@@ -98,67 +68,6 @@ public class LibraryManagementSystem
         }
     }
 
-
-    // Find the book with the highest price
-    public void findHighestPriceBook()
-    {
-        if (books.length == 0)
-        {
-            System.out.println("No books available.");
-            return;
-        }
-
-        Book highestPriceBook = books[0];
-
-        // Loop through all books to find the one with the highest price
-        for (int i = 1; i < books.length; i++)
-        {
-            if (books[i].getPrice() > highestPriceBook.getPrice())
-            {
-                highestPriceBook = books[i];
-            }
-        }
-
-        System.out.println("The book with the highest price is: " + highestPriceBook);
-    }
-
-
-    // Find the book with the lowest price
-    public void findLowestPriceBook()
-    {
-        if (books.length == 0)
-        {
-            System.out.println("No books available.");
-            return;
-        }
-
-        Book lowestPriceBook = books[0];
-
-        // Loop through all books to find the one with the lowest price
-        for (int i = 1; i < books.length; i++)
-        {
-            if (books[i].getPrice() < lowestPriceBook.getPrice())
-            {
-                lowestPriceBook = books[i];
-            }
-        }
-
-        System.out.println("The book with the lowest price is: " + lowestPriceBook);
-    }
-
-    // Calculate the total price of all books
-    public void totalPriceOfBooks()
-    {
-        int totalPrice = 0;
-
-        // Loop through all books and accumulate their prices
-        for (int i = 0; i < books.length; i++)
-        {
-            totalPrice += books[i].getPrice();
-        }
-
-        System.out.println("The total price of all books is: " + totalPrice);
-    }
 
     // Search books
     public void searchBook()
@@ -419,72 +328,4 @@ public class LibraryManagementSystem
         }
         return input;
     }
-
-
-    // Load books from txt file
-    public void loadBooksFromTxt()
-    {
-        // Assume that there are at most 100 books
-        Book[] tempBooks = new Book[100];
-        int bookCount = 0;  // Used to track the actual number of books loaded
-
-        try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH)))
-        {
-            String line;
-            while ((line = br.readLine()) != null)
-            {
-                String[] values = line.split(",");  // Split the line by comma
-                if (values.length == 4)
-                {  // Ensure each line contains 4 values (ISBN, Title, Author, Price)
-                    long isbn = Long.parseLong(values[0].trim());
-                    String title = values[1].trim();
-                    String author = values[2].trim();
-                    int price = Integer.parseInt(values[3].trim());
-
-                    if (bookCount < tempBooks.length)
-                    {
-                        tempBooks[bookCount] = new Book(isbn, title, author, price);  // Store book in the temporary array
-                        bookCount++;  // Increment the book count
-                    }
-                    else
-                    {
-                        System.out.println("Array is full. Cannot add more books.");
-                        break;  // Exit if the array size limit is reached
-                    }
-                }
-            }
-        } catch (IOException e)
-        {
-            System.out.println("Error reading file");
-        }
-
-        // Create an actual array of books with the correct size
-        books = new Book[bookCount];  // Create an array to fit the actual number of loaded books
-
-        // Copy the valid data from the tempBooks array to the books array
-        for (int i = 0; i < bookCount; i++)
-        {
-            books[i] = tempBooks[i];  // Copy the book data
-        }
-    }
-
-    // Save books to txt file
-    public void saveBooksToTxt()
-    {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH)))
-        {
-            for (int i = 0; i < books.length; i++)
-            {
-                Book book = books[i];
-                String line = book.getISBN() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getPrice();
-                bw.write(line);
-                bw.newLine();  // Write each book on a new line
-            }
-
-        } catch (IOException error)
-        {
-            System.out.println("Error writing to CSV file");
-        }
-    }
-
 }
