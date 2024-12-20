@@ -10,7 +10,7 @@ Additionally, users can select the menu color and test some system functionaliti
           
 Main: A stable version that can run properly.
 
-Develop: Based on Version 4, additional features are implemented.
+Version4-develop:develop process of Version4
 
 Debug: A version where the functionality cannot be properly implemented.
 
